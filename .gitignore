@@ -1,0 +1,14 @@
+# Ignore all without extensions
+*
+!*.*
+!*/
+
+# C/C++, Java, VSCode
+*.out
+*.swp
+*.jar
+*.class
+.cph/
+.vscode/
+
+!Makefile
