@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-#include "queue_task_t.h"
+#include "../queue/queue_task_t.h"
 
 typedef struct
 {
