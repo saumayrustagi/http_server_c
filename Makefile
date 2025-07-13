@@ -23,7 +23,8 @@ FAST_TARGET = fast_$(TARGET)
 # Define all source files in a variable
 SRCS = \
 	main.c \
-	web_server/server.c \
+	server/server.c \
+	server/connection.c \
 	threadpool/threadpool.c \
 	threadpool/worker.c \
 	queue/queue_task_t.c
