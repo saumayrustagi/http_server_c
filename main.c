@@ -1,7 +1,10 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdlib.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "threadpool/threadpool.h"
 #include "web_server/server.h"
@@ -21,8 +24,8 @@ void calculate_sum(int a, int b)
 
 int main()
 {
-	int lfd = create_listener();
-	print_listener_address(lfd);
+	int listener = create_listener(strdup("127.0.0.1:8080"));
+	print_listener_address(listener);
 	return 0;
 }
 
