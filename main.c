@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "threadpool/threadpool.h"
+#include "web_server/server.h"
 
 void print_message(void *msg)
 {
@@ -20,9 +21,16 @@ void calculate_sum(int a, int b)
 
 int main()
 {
-	threadpool_t *tp = threadpool_init(4, 16);
-	printf("Hi from main thread! (Thread ID: %ld)\n", pthread_self());
-	threadpool_execute(tp, print_message, "Hello from task 1!");
-	threadpool_destroy(tp);
+	int lfd = create_listener();
+	print_listener_address(lfd);
 	return 0;
 }
+
+// int main()
+// {
+// 	threadpool_t *tp = threadpool_init(4, 16);
+// 	printf("Hi from main thread! (Thread ID: %ld)\n", pthread_self());
+// 	threadpool_execute(tp, print_message, "Hello from task 1!");
+// 	threadpool_destroy(tp);
+// 	return 0;
+// }

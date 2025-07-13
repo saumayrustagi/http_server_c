@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <sys/socket.h>
+#include <assert.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <stdlib.h>
+
+#include "server.h"
+
+void print_listener_address(int lfd)
+{
+	struct sockaddr_in sin;
+	socklen_t sin_size = sizeof(sin);
+	assert(getsockname(lfd, (struct sockaddr *)&sin, &sin_size) != -1);
+
+	const size_t buf_size = INET_ADDRSTRLEN;
+	char buffer[INET_ADDRSTRLEN];
+	assert(inet_ntop(AF_INET, &sin.sin_addr, buffer, buf_size) != NULL);
+	fprintf(stderr, "Listening on %s:%d\n", buffer, ntohs(sin.sin_port));
+}
+
+int create_listener()
+{
+	int sockfd = create_socket();
+	struct sockaddr_in sin;
+	struct in_addr addr;
+
+	assert(inet_pton(AF_INET, "127.0.0.1", &addr) == 1);
+
+	sin.sin_family = AF_INET;
+	sin.sin_addr.s_addr = addr.s_addr;
+	sin.sin_port = htons(8080);
+	assert(bind(sockfd, (struct sockaddr *)&sin, sizeof(sin)) != -1);
+	return sockfd;
+}
+
+int create_socket()
+{
+	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	assert(sockfd != -1);
+	return sockfd;
+}
