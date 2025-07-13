@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "threadpool.h"
 #include "worker.h"
 

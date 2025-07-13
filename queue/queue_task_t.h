@@ -1,8 +1,5 @@
 #pragma once
 
-#include <assert.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <pthread.h>
 
 #include "../threadpool/task_t.h"

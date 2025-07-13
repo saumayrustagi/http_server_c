@@ -1,7 +1,4 @@
-#include <assert.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <pthread.h>
 
 #include "queue_task_t.h"
 

@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <sys/socket.h>
 #include <assert.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +9,7 @@
 void print_listener_address(int lfd)
 {
 	struct sockaddr_in sin;
-	assert(getsockname(lfd, (struct sockaddr *)&sin, &(socklen_t){sizeof(sin)}) != -1);
+	assert(getsockname(lfd, (struct sockaddr *)&sin, &(socklen_t){sizeof(sin)}) == 0);
 
 	const size_t buf_size = INET_ADDRSTRLEN;
 	char buffer[INET_ADDRSTRLEN];

@@ -1,9 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 
-#include <stdlib.h>
-#include <pthread.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <string.h>
 #include <sys/socket.h>
 
