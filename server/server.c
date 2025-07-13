@@ -11,12 +11,12 @@
 void print_listener_address(int lfd)
 {
 	struct sockaddr_in sin;
-	socklen_t sin_size = sizeof(sin);
-	assert(getsockname(lfd, (struct sockaddr *)&sin, &sin_size) != -1);
+	assert(getsockname(lfd, (struct sockaddr *)&sin, &(socklen_t){sizeof(sin)}) != -1);
 
 	const size_t buf_size = INET_ADDRSTRLEN;
 	char buffer[INET_ADDRSTRLEN];
 	assert(inet_ntop(AF_INET, &sin.sin_addr, buffer, buf_size) != NULL);
+
 	fprintf(stderr, "Listening on %s:%d\n", buffer, ntohs(sin.sin_port));
 }
 
@@ -43,5 +43,6 @@ int create_socket()
 {
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	assert(sockfd != -1);
+	assert(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &(int){1}, sizeof(int)) == 0);
 	return sockfd;
 }
