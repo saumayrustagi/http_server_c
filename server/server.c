@@ -33,7 +33,8 @@ int create_listener(char *address)
 	sin.sin_family = AF_INET;
 	sin.sin_addr.s_addr = addr.s_addr;
 	sin.sin_port = htons(atoi(port));
-	assert(bind(sockfd, (struct sockaddr *)&sin, sizeof(sin)) != -1);
+	assert(bind(sockfd, (struct sockaddr *)&sin, sizeof(sin)) == 0);
+	assert(listen(sockfd, 8) == 0);
 	free(address);
 	return sockfd;
 }
