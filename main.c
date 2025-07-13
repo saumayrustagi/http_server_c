@@ -14,14 +14,6 @@ void print_message(void *msg)
 	printf("Task: %s (Thread ID: %ld)\n", (char *)msg, pthread_self());
 }
 
-void calculate_sum(int a, int b)
-{
-	printf("Calculating sum of %d + %d (Thread ID: %ld)\n", a, b, pthread_self());
-	sleep(0.05);
-	int sum = a + b;
-	printf("Sum: %d (Thread ID: %ld) finished.\n", sum, pthread_self());
-}
-
 int main()
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
