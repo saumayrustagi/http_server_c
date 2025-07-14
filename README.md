@@ -1,3 +1,5 @@
+[Basically an implementation in C from scratch of my HTTP Server in Rust](https://github.com/saumayrustagi/http_server_rust)
+
 # Web Server in C
 
 Project to learn how multithreading, threadpools, function pointers and manually-managed memory works in C.
@@ -11,6 +13,12 @@ Project to learn how multithreading, threadpools, function pointers and manually
 * **Web Server:** The core server component responsible for listening for incoming connections, accepting them, and enqueuing them as tasks for the thread pool.
 
 ## Building
+
+```bash
+git clone https://github.com/saumayrustagi/http_server_c.git
+cd http_server_c
+```
+
 ### Prerequisites
 
 * `gcc`
