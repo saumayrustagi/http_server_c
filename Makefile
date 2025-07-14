@@ -11,10 +11,12 @@ CC = gcc
 # -fsanitize=address: Enable AddressSanitizer for memory error detection
 # -fsanitize=undefined: Enable UndefinedBehaviorSanitizer for undefined behavior detection
 # -fno-omit-frame-pointer: Required for AddressSanitizer stack traces
-CFLAGS_DEFAULT = -std=c17 -Wshadow -Wall -Wno-unused-result -g -D_GLIBC_DEBUG -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 
-# Compiler flags for 'fast' build (with optimization)
-CFLAGS_FAST = -std=c17 -Wshadow -Wall -Wno-unused-result -O2
+CFLAGS_DEFAULT = -std=c17 -Wshadow -Wall -Wno-unused-result
+
+CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -D_GLIBC_DEBUG -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
+
+CFLAGS_FAST = $(CFLAGS_DEFAULT) -O2
 
 # Define the executable name
 TARGET = main.out
@@ -23,7 +25,7 @@ FAST_TARGET = fast_$(TARGET)
 # Define all source files in a variable
 SRCS = \
 	main.c \
-	server/server.c \
+	server/socket.c \
 	server/connection.c \
 	threadpool/threadpool.c \
 	threadpool/worker.c \
@@ -38,7 +40,7 @@ fast: $(FAST_TARGET)
 # Rule to build the executable with default flags (sanitizers)
 # Uses the SRCS variable for dependencies
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS_DEFAULT) -o $(TARGET) $^
+	$(CC) $(CFLAGS_DEBUG) -o $(TARGET) $^
 
 # Rule to build the executable with fast flags (O2 optimization)
 # Also uses the SRCS variable for dependencies

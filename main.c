@@ -5,7 +5,7 @@
 #include <sys/socket.h>
 
 #include "threadpool/threadpool.h"
-#include "server/server.h"
+#include "server/socket.h"
 #include "server/connection.h"
 
 void print_message(void *msg)
