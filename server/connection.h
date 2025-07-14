@@ -7,4 +7,6 @@ typedef struct
 	const char *body;
 } response_t;
 
-void handle_connection(int connected_sock);
+void handle_connection(void *connected_sock);
+
+void print_request(char *buffer);

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
+#include <assert.h>
+#include <stdlib.h>
 
 #include "threadpool/threadpool.h"
 #include "server/socket.h"
@@ -16,20 +18,15 @@ void print_message(void *msg)
 int main()
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
-	print_listener_address(listener);
+	threadpool_t *pool = threadpool_init(4, 16);
+
 	while (1)
 	{
-		int connected_sock = accept(listener, NULL, NULL);
-		handle_connection(connected_sock);
+		int *connected_sock;
+		assert((connected_sock = malloc(sizeof(int))) != NULL);
+		assert((*connected_sock = accept(listener, NULL, NULL)) != -1);
+		threadpool_execute(pool, handle_connection, connected_sock);
 	}
+	threadpool_destroy(pool);
 	return 0;
 }
-
-// int main()
-// {
-// 	threadpool_t *tp = threadpool_init(4, 16);
-// 	printf("Hi from main thread! (Thread ID: %ld)\n", pthread_self());
-// 	threadpool_execute(tp, print_message, "Hello from task 1!");
-// 	threadpool_destroy(tp);
-// 	return 0;
-// }

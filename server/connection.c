@@ -20,14 +20,29 @@ static const int SLEEP_REQUEST_LEN = sizeof(SLEEP_REQUEST) - 1;
 static chararr OK_STATUS = "HTTP/1.1 200 OK \r\n\r\n";
 static chararr NOTFOUND_STATUS = "HTTP/1.1 404 NOT FOUND \r\n\r\n";
 
-void handle_connection(int connected_sock)
+void print_request(char *buffer)
 {
+	int req_len = (int)(strstr(buffer, "\r\n") - buffer);
+	char line[req_len + 1];
+	assert(snprintf(line, req_len + 1, "%s", buffer) > 0);
+	fprintf(stderr, "%s\n", line);
+}
+
+void handle_connection(void *args)
+{
+	// Extract connected socket
+	int connected_sock = *(int *)args;
+	// Free Argument
+	free(args);
+	args = NULL;
+
+	// Start handling connection
 	char buffer[512];
 	ssize_t bytes_received = recv(connected_sock, buffer, sizeof(buffer) - 1, 0);
 	assert(bytes_received > 0);
 	buffer[bytes_received] = '\0';
 
-	printf("%s", buffer);
+	print_request(buffer);
 
 	response_t resp;
 	resp.status = NULL;
@@ -41,7 +56,7 @@ void handle_connection(int connected_sock)
 	}
 	else if (strncmp(buffer, SLEEP_REQUEST, SLEEP_REQUEST_LEN) == 0)
 	{
-		sleep(10);
+		sleep(5);
 		resp.status = OK_STATUS;
 		resp.filename = "hello.html";
 	}
@@ -82,4 +97,5 @@ void handle_connection(int connected_sock)
 	free((char *)resp.body);
 
 	close(connected_sock);
+	fprintf(stderr, "%s\n", "====REQUEST SERVED====");
 }
