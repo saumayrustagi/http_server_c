@@ -10,11 +10,6 @@
 #include "server/socket.h"
 #include "server/connection.h"
 
-void print_message(void *msg)
-{
-	printf("Task: %s (Thread ID: %ld)\n", (char *)msg, pthread_self());
-}
-
 int main()
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
