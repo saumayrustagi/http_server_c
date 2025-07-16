@@ -12,7 +12,7 @@ CC = gcc
 # -fsanitize=undefined: Enable UndefinedBehaviorSanitizer for undefined behavior detection
 # -fno-omit-frame-pointer: Required for AddressSanitizer stack traces
 
-CFLAGS_DEFAULT = -std=c17 -Wshadow -Wall -Wno-unused-result
+CFLAGS_DEFAULT = -std=c17 -Wshadow -Wall -Wno-unused-result -pedantic
 
 CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -D_GLIBC_DEBUG -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 
