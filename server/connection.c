@@ -47,7 +47,7 @@ void handle_connection(void *args)
 	response_t resp;
 	resp.status = NULL;
 	resp.filename = NULL;
-	resp.body = strdup("");
+	assert((resp.body = strdup("")) != NULL);
 
 	if (strncmp(buffer, GET_REQUEST, GET_REQUEST_LEN) == 0)
 	{
@@ -83,6 +83,7 @@ void handle_connection(void *args)
 
 		assert(fclose(file) == 0);
 
+		free((char *)resp.body);
 		resp.body = body;
 	}
 

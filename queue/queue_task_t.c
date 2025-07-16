@@ -1,10 +1,12 @@
 #include <stdlib.h>
+#include <assert.h>
 
 #include "queue_task_t.h"
 
 queue_task_t *queue_init(int capacity)
 {
-	queue_task_t *q = (queue_task_t *)malloc(sizeof(queue_task_t));
+	queue_task_t *q;
+	assert((q = (queue_task_t *)malloc(sizeof(queue_task_t))) != NULL);
 	q->array = malloc(sizeof(task_t) * capacity);
 	q->size = 0;
 	q->capacity = capacity;
