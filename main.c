@@ -10,7 +10,7 @@
 #include "server/socket.h"
 #include "server/connection.h"
 
-int main()
+int main(void)
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
 	threadpool_t *pool = threadpool_init(4, 16);

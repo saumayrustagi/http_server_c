@@ -37,7 +37,7 @@ int create_listener(char *address)
 	return sockfd;
 }
 
-int create_socket()
+int create_socket(void)
 {
 	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	assert(sockfd != -1);

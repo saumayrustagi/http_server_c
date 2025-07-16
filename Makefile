@@ -1,5 +1,5 @@
 # Define the C compiler
-CC = gcc -std=c17
+CC = clang -std=c17
 
 # Default compiler flags (with sanitizers for development)
 # -std=c17: Use C17 standard
@@ -12,9 +12,9 @@ CC = gcc -std=c17
 # -fsanitize=undefined: Enable UndefinedBehaviorSanitizer for undefined behavior detection
 # -fno-omit-frame-pointer: Required for AddressSanitizer stack traces
 
-CFLAGS_DEFAULT = -Wshadow -Wall -Wno-unused-result -pedantic -fanalyzer
+CFLAGS_DEFAULT = -Wshadow -Wall -Wno-unused-result -pedantic
 
-CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -D_GLIBC_DEBUG -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
+CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 
 CFLAGS_FAST = $(CFLAGS_DEFAULT) -O2
 
