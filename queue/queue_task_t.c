@@ -47,8 +47,8 @@ task_t dequeue(queue_task_t *q)
 	{
 		pthread_cond_wait(&q->not_empty, &q->lock);
 	}
-	--(q->size);
 	task_t tmp = q->array[q->head];
+	--(q->size);
 	q->head = (q->head < q->capacity - 1) ? q->head + 1 : 0;
 	pthread_cond_signal(&q->not_full);
 	pthread_mutex_unlock(&q->lock);
