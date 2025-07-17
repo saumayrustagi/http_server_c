@@ -41,7 +41,11 @@ void handle_connection(void *args)
 	// Start handling connection
 	char buffer[512];
 	ssize_t bytes_received = recv(connected_sock, buffer, sizeof(buffer) - 1, 0);
-	assert(bytes_received > 0);
+	if (bytes_received < 0)
+	{
+		close(connected_sock);
+		return;
+	}
 	buffer[bytes_received] = '\0';
 
 	print_request(buffer);

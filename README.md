@@ -1,5 +1,8 @@
 [Basically an implementation in C from scratch of my HTTP Server in Rust](https://github.com/saumayrustagi/http_server_rust)
 
+- [ ] Use Memory Arenas for serving requests.
+- [ ] Port from mutex+cond to semaphores.
+
 # Web Server in C
 
 Project to learn how multithreading, threadpools, function pointers and manually-managed memory works in C.

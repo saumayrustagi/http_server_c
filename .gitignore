@@ -11,5 +11,6 @@
 .cph/
 .vscode/
 target/
+compile_commands.json
 
 !Makefile
