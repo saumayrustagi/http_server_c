@@ -1,24 +1,12 @@
-# Define the C compiler
+# --- COMPILER ---
 CC = clang -std=c17
-
-# Default compiler flags (with sanitizers for development)
-# -std=c17: Use C17 standard
-# -Wshadow: Warn about shadowed variables
-# -Wall: Enable all common warnings
-# -Wno-unused-result: Disable warning for unused function results
-# -g: Include debugging information
-# -D_GLIBC_DEBUG: Define _GLIBC_DEBUG for glibc debugging features
-# -fsanitize=address: Enable AddressSanitizer for memory error detection
-# -fsanitize=undefined: Enable UndefinedBehaviorSanitizer for undefined behavior detection
-# -fno-omit-frame-pointer: Required for AddressSanitizer stack traces
 
 CFLAGS_DEFAULT = -Wshadow -Wall -Wno-unused-result -pedantic
 
 CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
-
 CFLAGS_FAST = $(CFLAGS_DEFAULT) -O2
 
-# Define the executable name
+# --- FILES ---
 TARGET = main.out
 FAST_TARGET = fast_$(TARGET)
 
@@ -31,24 +19,39 @@ SRCS = \
 	threadpool/worker.c \
 	queue/queue_task_t.c
 
-# Default target: build the executable with sanitizers
-all: $(TARGET)
+DEBUG_OBJS_DIR = target/debug/
+FAST_OBJS_DIR = target/release/
 
-# Target for a fast build (with O2 optimization)
-fast: $(FAST_TARGET)
+DEBUG_OBJS = $(patsubst %.c,$(DEBUG_OBJS_DIR)%.o,$(SRCS))
+FAST_OBJS = $(patsubst %.c,$(FAST_OBJS_DIR)%.o,$(SRCS))
 
-# Rule to build the executable with default flags (sanitizers)
-# Uses the SRCS variable for dependencies
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS_DEBUG) -o $(TARGET) $^
+# --- ARGS ---
+$(DEBUG_OBJS): CFLAGS = $(CFLAGS_DEBUG)
+$(FAST_OBJS): CFLAGS = $(CFLAGS_FAST)
 
-# Rule to build the executable with fast flags (O2 optimization)
-# Also uses the SRCS variable for dependencies
-$(FAST_TARGET): $(SRCS)
-	$(CC) $(CFLAGS_FAST) -o $(FAST_TARGET) $^
+$(TARGET): CFLAGS = $(CFLAGS_DEBUG)
+$(FAST_TARGET): CFLAGS = $(CFLAGS_FAST)
 
-# Clean rule: remove the executables
-clean:
-	rm -f $(TARGET) $(FAST_TARGET)
+# --- COMMANDS ---
+$(DEBUG_OBJS_DIR)%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(FAST_OBJS_DIR)%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(DEBUG_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+$(FAST_TARGET): $(FAST_OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
 
 .PHONY: all fast clean
+
+all: $(TARGET)
+
+fast: $(FAST_TARGET)
+
+clean:
+	rm -rf $(TARGET) $(FAST_TARGET) $(DEBUG_OBJS_DIR) $(FAST_OBJS_DIR)

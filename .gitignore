@@ -10,5 +10,6 @@
 *.class
 .cph/
 .vscode/
+target/
 
 !Makefile
