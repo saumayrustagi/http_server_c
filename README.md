@@ -39,7 +39,7 @@ make fast       # Builds the project in release mode
 ./fast_main.out # Runs the server with optimizations
 ```
 
-## Demo
+## Demo (Outdated)
 
 https://github.com/user-attachments/assets/71a56a53-f65a-4560-8892-f3080f6e52c5
 
