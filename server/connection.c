@@ -22,7 +22,9 @@ static chararr NOTFOUND_STATUS = "HTTP/1.1 404 NOT FOUND \r\n\r\n";
 
 void print_request(char *buffer)
 {
-	int req_len = (int)(strstr(buffer, "\r\n") - buffer);
+	char *foundptr;
+	assert((foundptr = strstr(buffer, "\r\n")) != NULL);
+	int req_len = (int)(foundptr - buffer);
 	char line[req_len + 1];
 	assert(snprintf(line, req_len + 1, "%s", buffer) > 0);
 	fprintf(stderr, "%s\n", line);
@@ -100,4 +102,3 @@ void handle_connection(void *args)
 	close(connected_sock);
 	fprintf(stderr, "%s\n", "====REQUEST SERVED====");
 }
-

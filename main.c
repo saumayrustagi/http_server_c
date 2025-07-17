@@ -13,6 +13,8 @@
 int main(void)
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
+	print_listener_address(listener);
+
 	threadpool_t *pool = threadpool_init(4, 16);
 
 	while (1)

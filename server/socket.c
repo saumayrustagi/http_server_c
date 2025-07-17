@@ -15,7 +15,7 @@ void print_listener_address(int lfd)
 	char buffer[INET_ADDRSTRLEN];
 	assert(inet_ntop(AF_INET, &sin.sin_addr, buffer, buf_size) != NULL);
 
-	fprintf(stderr, "Listening on %s:%d\n", buffer, ntohs(sin.sin_port));
+	fprintf(stderr, "Listening on http://%s:%d\n", buffer, ntohs(sin.sin_port));
 }
 
 int create_listener(char *address)
