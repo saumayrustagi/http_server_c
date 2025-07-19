@@ -6,7 +6,7 @@ typedef struct
 {
 	void *mem_block;
 	void *next_free;
-	size_t size;
+	size_t capacity;
 
 } memory_arena_t;
 
