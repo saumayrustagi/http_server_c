@@ -2,6 +2,7 @@
 
 - [ ] Use Memory Arenas for serving requests.
 - [ ] Port from mutex+cond to semaphores.
+- [ ] Serve files directly (like images, videos)
 
 # Web Server in C
 
