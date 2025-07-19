@@ -17,7 +17,8 @@ SRCS = \
 	server/connection.c \
 	threadpool/threadpool.c \
 	threadpool/worker.c \
-	queue/queue_task_t.c
+	queue/queue_task_t.c \
+	arena/arena.c
 
 DEBUG_OBJS_DIR = target/debug/
 FAST_OBJS_DIR = target/release/

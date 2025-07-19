@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <assert.h>
+
 #include "arena.h"
 
 memory_arena_t *arena_init(size_t capacity)
@@ -15,7 +18,7 @@ void *arena_alloc(memory_arena_t *arena, size_t size)
 	assert(arena != NULL && size > 0);
 	void *curn_free = arena->next_free;
 	arena->next_free = arena->mem_block + size;
-	assert(arena->next_free - arena->mem_block < arena->capacity);
+	assert(arena->next_free - arena->mem_block <= arena->capacity);
 	return curn_free;
 }
 
