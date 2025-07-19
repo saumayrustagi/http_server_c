@@ -6,10 +6,13 @@
 #include <unistd.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 #include "connection.h"
 
 typedef const char chararr[];
+
+extern pthread_key_t thread_id;
 
 static chararr GET_REQUEST = "GET / HTTP/1.1\r\n";
 static chararr SLEEP_REQUEST = "GET /sleep HTTP/1.1\r\n";
@@ -20,6 +23,11 @@ static const int SLEEP_REQUEST_LEN = sizeof(SLEEP_REQUEST) - 1;
 static chararr OK_STATUS = "HTTP/1.1 200 OK \r\n\r\n";
 static chararr NOTFOUND_STATUS = "HTTP/1.1 404 NOT FOUND \r\n\r\n";
 
+void thread_print(char *str)
+{
+	fprintf(stderr, "[%ld][%ld] %s\n", pthread_self(), (long)pthread_getspecific(thread_id), str);
+}
+
 void print_request(char *buffer)
 {
 	char *foundptr;
@@ -27,7 +35,7 @@ void print_request(char *buffer)
 	int req_len = (int)(foundptr - buffer);
 	char line[req_len + 1];
 	assert(snprintf(line, req_len + 1, "%s", buffer) > 0);
-	fprintf(stderr, "%s\n", line);
+	thread_print(line);
 }
 
 void handle_connection(void *args)
@@ -104,5 +112,5 @@ void handle_connection(void *args)
 	free((char *)resp.body);
 
 	close(connected_sock);
-	fprintf(stderr, "%s\n", "====REQUEST SERVED====");
+	thread_print("====REQUEST SERVED====");
 }

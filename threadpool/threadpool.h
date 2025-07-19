@@ -1,11 +1,13 @@
 #pragma once
 
 #include "../queue/queue_task_t.h"
+#include "worker.h"
 
 typedef struct
 {
 	int num_threads;
 	pthread_t *workers;
+	worker_args_t *worker_args;
 	queue_task_t *queue;
 } threadpool_t;
 
