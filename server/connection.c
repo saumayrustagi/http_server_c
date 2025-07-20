@@ -9,7 +9,7 @@
 #include <pthread.h>
 
 #include "connection.h"
-#include "../threadpool/task_t.h"
+#include "../threadpool/task.h"
 
 typedef const char chararr[];
 
@@ -26,7 +26,7 @@ static chararr NOTFOUND_STATUS = "HTTP/1.1 404 NOT FOUND \r\n\r\n";
 
 void thread_print(char *str)
 {
-	fprintf(stderr, "[%ld][%ld] %s\n", pthread_self(), (long)pthread_getspecific(thread_id), str);
+	fprintf(stderr, "[%ld] %s\n", (long)pthread_getspecific(thread_id), str);
 }
 
 void print_request(char *buffer)
@@ -115,5 +115,5 @@ void handle_connection(void *args)
 
 	close(connected_sock);
 	thread_print("====REQUEST SERVED====");
-	fprintf(stderr, "%ld of %ld mem used\n", ((char *)arena->next_free - (char *)arena->mem_block), arena->capacity);
+	// fprintf(stderr, "%ld of %ld mem used\n", ((char *)arena->next_free - (char *)arena->mem_block), arena->capacity);
 }

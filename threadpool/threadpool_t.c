@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <stdint.h>
 
-#include "threadpool.h"
+#include "threadpool_t.h"
 #include "worker.h"
 
 pthread_key_t thread_id;

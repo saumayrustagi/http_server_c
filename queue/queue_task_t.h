@@ -2,7 +2,7 @@
 
 #include <pthread.h>
 
-#include "../threadpool/task_t.h"
+#include "../threadpool/task.h"
 
 typedef struct
 {

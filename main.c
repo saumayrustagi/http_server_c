@@ -6,11 +6,11 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "threadpool/threadpool.h"
+#include "threadpool/threadpool_t.h"
 #include "server/socket.h"
 #include "server/connection.h"
 
-size_t ARENA_SIZE = 2048;
+const size_t ARENA_SIZE = 2048;
 
 int main(void)
 {

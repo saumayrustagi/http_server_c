@@ -15,7 +15,7 @@ SRCS = \
 	main.c \
 	server/socket.c \
 	server/connection.c \
-	threadpool/threadpool.c \
+	threadpool/threadpool_t.c \
 	threadpool/worker.c \
 	queue/queue_task_t.c \
 	arena/arena.c
