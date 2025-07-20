@@ -17,8 +17,8 @@ void *arena_alloc(memory_arena_t *arena, size_t size)
 {
 	assert(arena != NULL && size > 0);
 	void *curn_free = arena->next_free;
-	arena->next_free = arena->mem_block + size;
-	assert(arena->next_free - arena->mem_block <= arena->capacity);
+	arena->next_free = (char *)curn_free + size;
+	assert((char *)arena->mem_block + arena->capacity >= (char *)arena->next_free);
 	return curn_free;
 }
 

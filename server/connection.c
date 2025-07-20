@@ -9,6 +9,7 @@
 #include <pthread.h>
 
 #include "connection.h"
+#include "../threadpool/task_t.h"
 
 typedef const char chararr[];
 
@@ -40,16 +41,21 @@ void print_request(char *buffer)
 
 void handle_connection(void *args)
 {
-	// Extract connected socket
-	int connected_sock = *(int *)args;
-	// Free Argument
-	free(args);
-	args = NULL;
+	task_args_t *t_args = (task_args_t *)args;
+
+	// Extract and free connected socket from task_args
+	int connected_sock = *(int *)(t_args->args);
+	free(t_args->args);
+	t_args->args = NULL;
+
+	// Extract arena from task_args
+	memory_arena_t *arena = (memory_arena_t *)t_args->arena;
 
 	// Start handling connection
-	char buffer[512];
-	ssize_t bytes_received = recv(connected_sock, buffer, sizeof(buffer) - 1, 0);
-	if (bytes_received < 0)
+	const size_t buf_size = 512;
+	char *buffer = arena_alloc(arena, buf_size);
+	ssize_t bytes_received = recv(connected_sock, buffer, buf_size - 1, 0);
+	if (bytes_received <= 0)
 	{
 		close(connected_sock);
 		return;
@@ -61,7 +67,7 @@ void handle_connection(void *args)
 	response_t resp;
 	resp.status = NULL;
 	resp.filename = NULL;
-	assert((resp.body = strdup("")) != NULL);
+	resp.body = NULL;
 
 	if (strncmp(buffer, GET_REQUEST, GET_REQUEST_LEN) == 0)
 	{
@@ -91,26 +97,23 @@ void handle_connection(void *args)
 		assert((filesize = ftell(file)) > 0);
 		assert(fseek(file, 0, SEEK_SET) == 0);
 
-		assert((body = malloc(filesize + 1)) != NULL);
+		body = arena_alloc(arena, filesize + 1);
 		assert((bytes_read = fread(body, sizeof(char), filesize, file)) == filesize);
 		body[bytes_read] = '\0';
 
 		assert(fclose(file) == 0);
 
-		free((char *)resp.body);
 		resp.body = body;
 	}
 
-	int unified_response_len = strlen(resp.status) + strlen(resp.body) + 1;
-	char *unified_response = malloc(unified_response_len);
+	int unified_response_len = strlen(resp.status) + (resp.body ? strlen(resp.body) : 0) + 1;
+	char *unified_response = arena_alloc(arena, unified_response_len);
 
-	assert(snprintf(unified_response, unified_response_len, "%s%s", resp.status, resp.body) == unified_response_len - 1);
+	assert(snprintf(unified_response, unified_response_len, "%s%s", resp.status, (resp.body ? resp.body : "")) == unified_response_len - 1);
 
 	send(connected_sock, unified_response, unified_response_len, 0);
 
-	free(unified_response);
-	free((char *)resp.body);
-
 	close(connected_sock);
 	thread_print("====REQUEST SERVED====");
+	fprintf(stderr, "%ld of %ld mem used\n", ((char *)arena->next_free - (char *)arena->mem_block), arena->capacity);
 }

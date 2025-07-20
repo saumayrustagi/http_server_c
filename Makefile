@@ -7,7 +7,7 @@ CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -fsanitize=address -fsanitize=undefined -fno
 CFLAGS_FAST = $(CFLAGS_DEFAULT) -O2
 
 # --- FILES ---
-TARGET = main.out
+TARGET = main
 FAST_TARGET = fast_$(TARGET)
 
 # Define all source files in a variable
