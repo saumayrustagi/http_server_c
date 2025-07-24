@@ -3,7 +3,7 @@
 #include "../queue/queue_task_t.h"
 #include "worker.h"
 
-typedef struct
+typedef struct __threadpool_t
 {
 	int num_threads;
 	pthread_t *workers;

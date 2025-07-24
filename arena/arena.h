@@ -2,7 +2,7 @@
 
 #include <stddef.h>
 
-typedef struct
+typedef struct __memory_arena_t
 {
 	void *mem_block;
 	void *next_free;

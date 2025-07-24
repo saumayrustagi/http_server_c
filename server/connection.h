@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct
+typedef struct __response_t
 {
 	const char *status;
 	const char *filename;

@@ -2,7 +2,7 @@
 
 #include "../arena/arena.h"
 
-typedef struct
+typedef struct __task_t
 {
 	void (*fn)(void *);
 	void *args;

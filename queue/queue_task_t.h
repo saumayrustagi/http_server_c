@@ -4,7 +4,7 @@
 
 #include "../threadpool/task.h"
 
-typedef struct
+typedef struct __queue_task_t
 {
 	task_t *array;
 	int size;

@@ -1,6 +1,6 @@
 #pragma once
 
-typedef struct
+typedef struct __worker_args_t
 {
 	int id;
 	queue_task_t *q;
