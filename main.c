@@ -11,13 +11,15 @@
 #include "server/connection.h"
 
 const size_t ARENA_SIZE = 2048;
+static const int NUMBER_THREADS = 4;
 
 int main(void)
 {
 	int listener = create_listener(strdup("127.0.0.1:8080"));
 	print_listener_address(listener);
 
-	threadpool_t *pool = threadpool_init(4, 16);
+	threadpool_t *pool = threadpool_init(NUMBER_THREADS, 16);
+	fprintf(stderr, "Number of Threads: %d\n", NUMBER_THREADS);
 
 	while (1)
 	{
