@@ -25,9 +25,9 @@ cd http_server_c
 
 ### Prerequisites
 
-* `gcc`
+* `clang`/`gcc` (change in `Makefile` as suitable)
 * `make`
-* `pthread` library
+* `glibc`
 
 ### Debug Mode (Sanitizers)
 
