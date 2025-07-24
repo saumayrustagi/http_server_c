@@ -1,5 +1,7 @@
 #pragma once
 
+#include <pthread.h>
+
 #include "../queue/queue_task_t.h"
 #include "worker.h"
 

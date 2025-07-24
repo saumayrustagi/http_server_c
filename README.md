@@ -1,7 +1,7 @@
 [Basically an implementation in C from scratch of my HTTP Server in Rust](https://github.com/saumayrustagi/http_server_rust)
 
 - [x] Use Memory Arenas for serving requests.
-- [ ] Port from mutex+cond to semaphores.
+- [x] Port from mutex+cond to semaphores.
 - [ ] Serve files directly (like images, videos)
 
 # Web Server in C

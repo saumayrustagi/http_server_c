@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pthread.h>
+#include <semaphore.h>
 
 #include "../threadpool/task.h"
 
@@ -12,9 +12,9 @@ typedef struct __queue_task_t
 	int head;
 	int tail;
 
-	pthread_mutex_t lock;
-	pthread_cond_t not_empty;
-	pthread_cond_t not_full;
+	sem_t mutex;
+	sem_t empty;
+	sem_t full;
 } queue_task_t;
 
 queue_task_t *queue_init(int capacity);
