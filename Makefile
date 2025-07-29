@@ -1,7 +1,7 @@
 # --- COMPILER ---
 CC = clang -std=c17
 
-CFLAGS_DEFAULT = -Wshadow -Wall -Wno-unused-result -pedantic
+CFLAGS_DEFAULT = -Wshadow -Wall -Wextra -Wno-unused-result -pedantic -Werror
 
 CFLAGS_DEBUG = $(CFLAGS_DEFAULT) -g -fsanitize=address -fsanitize=undefined -fno-omit-frame-pointer
 CFLAGS_FAST = $(CFLAGS_DEFAULT) -O2

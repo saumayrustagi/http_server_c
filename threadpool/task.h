@@ -8,7 +8,7 @@ typedef struct __task_t
 	void *args;
 } task_t;
 
-typedef struct
+typedef struct __task_args_t
 {
 	void *args;
 	memory_arena_t *arena;

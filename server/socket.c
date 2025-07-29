@@ -12,7 +12,7 @@ void print_listener_address(int lfd)
 	assert(getsockname(lfd, (struct sockaddr *)&sin, &(socklen_t){sizeof(sin)}) == 0);
 
 	const size_t buf_size = INET_ADDRSTRLEN;
-	char buffer[INET_ADDRSTRLEN];
+	char buffer[buf_size];
 	assert(inet_ntop(AF_INET, &sin.sin_addr, buffer, buf_size) != NULL);
 
 	fprintf(stderr, "Listening on http://%s:%d\n", buffer, ntohs(sin.sin_port));

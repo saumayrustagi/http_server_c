@@ -1,5 +1,3 @@
-#define _POSIX_C_SOURCE 200809L
-
 #include <sys/socket.h>
 #include <stdio.h>
 #include <string.h>
@@ -88,7 +86,7 @@ void handle_connection(void *args)
 	if (resp.filename)
 	{
 		FILE *file;
-		long filesize;
+		size_t filesize;
 		char *body;
 		size_t bytes_read;
 
