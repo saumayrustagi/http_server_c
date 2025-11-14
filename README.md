@@ -1,4 +1,4 @@
-[Basically an implementation in C from scratch of my HTTP Server in Rust](https://github.com/saumayrustagi/http_server_rust)
+An implementation of [HTTP Server in Rust](https://github.com/saumayrustagi/http_server_rust) in C from scratch.
 
 - [x] Use Memory Arenas for serving requests.
 - [x] Port from mutex+cond to semaphores.
@@ -15,6 +15,8 @@ Project to learn how multithreading, threadpools, function pointers and manually
 * **Thread Pool:** A pool of worker threads that retrieve tasks from the queue and execute them in parallel.
 
 * **Web Server:** The core server component responsible for listening for incoming connections, accepting them, and enqueuing them as tasks for the thread pool.
+
+* **Memory Arena:** A primitive chunk of malloc'd memory for short-lived allocations.
 
 ## Building
 
